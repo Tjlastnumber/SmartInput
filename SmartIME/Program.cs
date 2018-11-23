@@ -22,7 +22,7 @@ namespace SmartIME
         {
             int currentProcessId = 0;
 
-            for (; ; )
+            while(true)
             {
                 IntPtr hWnd = GetForegroundWindow();    //获取活动窗口句柄
                 GetWindowThreadProcessId(hWnd, out int calcID);
@@ -30,8 +30,9 @@ namespace SmartIME
                 if (calcID != currentProcessId)
                 {
                     currentProcessId = calcID;
-                    MessageBox.Show("进程名：" + myProcess.ProcessName + "\n" + "进程ID：" + calcID);
+                    Console.WriteLine("进程名：" + myProcess.ProcessName + "\n" + "进程ID：" + calcID);
                 }
+                Thread.Sleep(1000);
             }
         }
     }

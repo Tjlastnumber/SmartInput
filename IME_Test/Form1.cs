@@ -94,20 +94,21 @@ namespace IME_Test
                             }
                         }
                     }
+                    Thread.Sleep(500);
                 }
             });
 
-            Task.Run(() =>
-            {
-                for (; ; )
-                {
-                    Thread.Sleep(1000);
-                    dataGridView1.BeginInvoke(new MethodInvoker(() =>
-                    {
-                        bs.DataSource = GetProcesses();
-                    }));
-                }
-            });
+            //Task.Run(() =>
+            //{
+            //    for (; ; )
+            //    {
+            //        Thread.Sleep(1000);
+            //        dataGridView1.BeginInvoke(new MethodInvoker(() =>
+            //        {
+            //            bs.DataSource = GetProcesses();
+            //        }));
+            //    }
+            //});
         }
 
         protected override void OnActivated(EventArgs e)
