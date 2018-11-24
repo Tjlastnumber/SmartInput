@@ -25,9 +25,6 @@ namespace IME_Test
         [DllImport("User32.dll")]
         private static extern int GetKeyboardLayout(IntPtr threadId);
 
-        [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
-        private static extern int ImmGetCompositionStringW(IntPtr hIMC, int dwIndex, byte[] lpBuf, int dwBufLen);
-
         [DllImport("user32.dll")]
         private static extern bool PostMessage(IntPtr hhwnd, uint msg, IntPtr wparam, IntPtr lparam);
 
@@ -35,9 +32,6 @@ namespace IME_Test
         private static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
 
         private Dictionary<string, string> inputDict = new Dictionary<string, string>();
-        private InputLanguage currentLanguage;
-        private Process currentProcess;
-        private InputLanguage globalInputLanguage;
         private const int WS_EX_NOACTIVATE = 0x08000000;
         private const int GWL_EXSTYLE = -20;
         private static uint WM_INPUTLANGCHANGEREQUEST = 0x0050;
