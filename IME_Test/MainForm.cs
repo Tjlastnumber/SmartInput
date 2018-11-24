@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace IME_Test
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         [DllImport("User32.dll")]
         private static extern IntPtr GetForegroundWindow();     //获取活动窗口句柄
@@ -35,31 +35,29 @@ namespace IME_Test
         private static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
 
         private Dictionary<string, string> inputDict = new Dictionary<string, string>();
-        private InputLanguage currentLanguage;
-        private Process currentProcess;
-        private InputLanguage globalInputLanguage;
         private const int WS_EX_NOACTIVATE = 0x08000000;
         private const int GWL_EXSTYLE = -20;
         private static uint WM_INPUTLANGCHANGEREQUEST = 0x0050;
         private static uint KLF_ACTIVATE = 1;
+        private bool CanClose;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            dataGridView1.AutoGenerateColumns = false;
-            bs.DataSource = GetProcesses();
+            dgv_Process.AutoGenerateColumns = false;
+            GetProcessesAsync();
 
-            DataGridViewComboBoxColumn ilColumn = dataGridView1.Columns["data_inputLanguage"] as DataGridViewComboBoxColumn;
+            DataGridViewComboBoxColumn ilColumn = dgv_Process.Columns["data_inputLanguage"] as DataGridViewComboBoxColumn;
             foreach (InputLanguage item in InputLanguage.InstalledInputLanguages)
             {
                 ilColumn.Items.Add(item);
             }
 
-            ilColumn.DisplayMember = "LayoutName";
-            ilColumn.ValueMember = "Culture";
+            ilColumn.DisplayMember = nameof(InputLanguage.LayoutName);
+            ilColumn.ValueMember = nameof(InputLanguage.Culture);
         }
 
-        private List<Process> GetProcesses()
+        private Task<List<Process>> AsyncGetProcess()
         {
             Process[] ps = Process.GetProcesses();
             List<Process> processDict = new List<Process>();
@@ -68,7 +66,12 @@ namespace IME_Test
                        where p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.Length > 0
                        select p;
 
-            return data.ToList();
+            return Task.FromResult(data.ToList());
+        }
+
+        private async void GetProcessesAsync()
+        {
+            bindingSource.DataSource = await AsyncGetProcess();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -117,11 +120,10 @@ namespace IME_Test
             
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Btn_OK_Click(object sender, EventArgs e)
         {
-            dataGridView1.EndEdit();
+            dgv_Process.EndEdit();
         }
-
 
         protected override void OnClosed(EventArgs e)
         {
@@ -129,23 +131,22 @@ namespace IME_Test
             base.OnClosed(e);
         }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            dataGridView1.BeginEdit(true);
-            ComboBox cb = dataGridView1.EditingControl as ComboBox;
-            if (cb != null) cb.DroppedDown = true;
+            dgv_Process.BeginEdit(true);
+            if (dgv_Process.EditingControl is ComboBox cb) cb.DroppedDown = true;
         }
 
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            var cb = dataGridView1[e.ColumnIndex, e.RowIndex] as DataGridViewComboBoxCell;
+            var cb = dgv_Process[e.ColumnIndex, e.RowIndex] as DataGridViewComboBoxCell;
             CultureInfo culture = cb.Value as CultureInfo;
-            string processName = ((Process)bs[e.RowIndex]).ProcessName;
+            string processName = ((Process)bindingSource[e.RowIndex]).ProcessName;
             inputDict[processName] = culture?.KeyboardLayoutId.ToString("x8");
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             WindowState = FormWindowState.Normal;
             Show();
@@ -153,8 +154,19 @@ namespace IME_Test
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
+            e.Cancel = e.CloseReason == CloseReason.UserClosing && !CanClose;
             Hide();
+        }
+
+        private void Cms_btn_Setting_Click(object sender, EventArgs e)
+        {
+            Show();       
+        }
+
+        private void Tmi_Quit_Click(object sender, EventArgs e)
+        {
+            CanClose = true;
+            Close();
         }
     }
 }
