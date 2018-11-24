@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartIME", "SmartIME\SmartIME.csproj", "{9B44D664-4321-4650-8D6D-85115C9E1309}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartInput", "IME_Test\SmartInput.csproj", "{0F13FD59-E4C5-40DF-9816-0A93BE0B0348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IME_Test", "IME_Test\IME_Test.csproj", "{0F13FD59-E4C5-40DF-9816-0A93BE0B0348}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
