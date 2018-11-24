@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_OK = new System.Windows.Forms.Button();
             this.dgv_Process = new System.Windows.Forms.DataGridView();
-            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.data_inputLanguage = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -41,6 +40,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Tmi_Quit = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ProcessIcon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_inputLanguage = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Process)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
@@ -67,6 +69,7 @@
             this.dgv_Process.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_Process.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_Process.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProcessIcon,
             this.ProcessName,
             this.data_inputLanguage});
             this.dgv_Process.DataSource = this.bindingSource;
@@ -79,21 +82,6 @@
             this.dgv_Process.TabIndex = 3;
             this.dgv_Process.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellClick);
             this.dgv_Process.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellEndEdit);
-            // 
-            // ProcessName
-            // 
-            this.ProcessName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ProcessName.DataPropertyName = "ProcessName";
-            this.ProcessName.HeaderText = "进程名";
-            this.ProcessName.Name = "ProcessName";
-            this.ProcessName.ReadOnly = true;
-            // 
-            // data_inputLanguage
-            // 
-            this.data_inputLanguage.DataPropertyName = "value";
-            this.data_inputLanguage.HeaderText = "输入法";
-            this.data_inputLanguage.Name = "data_inputLanguage";
-            this.data_inputLanguage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // notifyIcon
             // 
@@ -142,6 +130,40 @@
             this.panel1.Size = new System.Drawing.Size(803, 80);
             this.panel1.TabIndex = 4;
             // 
+            // ProcessIcon
+            // 
+            this.ProcessIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProcessIcon.DataPropertyName = "Icon";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.ProcessIcon.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ProcessIcon.FillWeight = 38.77094F;
+            this.ProcessIcon.HeaderText = "";
+            this.ProcessIcon.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.ProcessIcon.Name = "ProcessIcon";
+            this.ProcessIcon.ReadOnly = true;
+            this.ProcessIcon.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ProcessIcon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ProcessIcon.Width = 35;
+            // 
+            // ProcessName
+            // 
+            this.ProcessName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProcessName.DataPropertyName = "ProcessName";
+            this.ProcessName.HeaderText = "进程名";
+            this.ProcessName.Name = "ProcessName";
+            this.ProcessName.ReadOnly = true;
+            this.ProcessName.Width = 150;
+            // 
+            // data_inputLanguage
+            // 
+            this.data_inputLanguage.DataPropertyName = "value";
+            this.data_inputLanguage.FillWeight = 13.29289F;
+            this.data_inputLanguage.HeaderText = "输入法";
+            this.data_inputLanguage.Name = "data_inputLanguage";
+            this.data_inputLanguage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -171,12 +193,13 @@
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.BindingSource bindingSource;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn data_inputLanguage;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem cms_btn_Setting;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem Tmi_Quit;
+        private System.Windows.Forms.DataGridViewImageColumn ProcessIcon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn data_inputLanguage;
     }
 }
 

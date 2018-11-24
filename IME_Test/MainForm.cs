@@ -22,12 +22,6 @@ namespace IME_Test
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr GetWindowThreadProcessId(IntPtr hwnd, out int ID);   //获取线程ID
 
-        [DllImport("User32.dll")]
-        private static extern int GetKeyboardLayout(IntPtr threadId);
-
-        [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
-        private static extern int ImmGetCompositionStringW(IntPtr hIMC, int dwIndex, byte[] lpBuf, int dwBufLen);
-
         [DllImport("user32.dll")]
         private static extern bool PostMessage(IntPtr hhwnd, uint msg, IntPtr wparam, IntPtr lparam);
 
@@ -45,7 +39,7 @@ namespace IME_Test
         {
             InitializeComponent();
             dgv_Process.AutoGenerateColumns = false;
-            GetProcessesAsync();
+            GetProcesses();
 
             DataGridViewComboBoxColumn ilColumn = dgv_Process.Columns["data_inputLanguage"] as DataGridViewComboBoxColumn;
             foreach (InputLanguage item in InputLanguage.InstalledInputLanguages)
@@ -57,19 +51,22 @@ namespace IME_Test
             ilColumn.ValueMember = nameof(InputLanguage.Culture);
         }
 
-        private Task<List<Process>> AsyncGetProcess()
+        private Task<List<ProcessData>> AsyncGetProcess()
         {
             Process[] ps = Process.GetProcesses();
             List<Process> processDict = new List<Process>();
 
             var data = from p in ps
                        where p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.Length > 0
-                       select p;
-
+                       select new ProcessData
+                       {
+                           ProcessName = p.ProcessName,
+                           Icon = Icon.ExtractAssociatedIcon(p.MainModule.FileName)
+                       };
             return Task.FromResult(data.ToList());
         }
 
-        private async void GetProcessesAsync()
+        private async void GetProcesses()
         {
             bindingSource.DataSource = await AsyncGetProcess();
         }
@@ -117,7 +114,7 @@ namespace IME_Test
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            
+
         }
 
         private void Btn_OK_Click(object sender, EventArgs e)
@@ -142,7 +139,7 @@ namespace IME_Test
         {
             var cb = dgv_Process[e.ColumnIndex, e.RowIndex] as DataGridViewComboBoxCell;
             CultureInfo culture = cb.Value as CultureInfo;
-            string processName = ((Process)bindingSource[e.RowIndex]).ProcessName;
+            string processName = ((ProcessData)bindingSource[e.RowIndex]).ProcessName;
             inputDict[processName] = culture?.KeyboardLayoutId.ToString("x8");
         }
 
@@ -160,13 +157,30 @@ namespace IME_Test
 
         private void Cms_btn_Setting_Click(object sender, EventArgs e)
         {
-            Show();       
+            Show();
         }
 
         private void Tmi_Quit_Click(object sender, EventArgs e)
         {
             CanClose = true;
             Close();
+        }
+    }
+
+    public class ProcessData
+    {
+        public string ProcessName { get; set; }
+        private Icon icon;
+        public Icon Icon
+        {
+            get
+            {
+                return icon;
+            }
+            set
+            {
+                icon = new Icon(value, new Size(32, 32));
+            }
         }
     }
 }
