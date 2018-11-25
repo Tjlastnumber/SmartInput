@@ -21,19 +21,22 @@ namespace SmartIME
         static void Main(string[] args)
         {
             int currentProcessId = 0;
-
-            while(true)
+            Task.Run(() =>
             {
-                IntPtr hWnd = GetForegroundWindow();    //获取活动窗口句柄
-                GetWindowThreadProcessId(hWnd, out int calcID);
-                Process myProcess = Process.GetProcessById(calcID);
-                if (calcID != currentProcessId)
+                while (true)
                 {
-                    currentProcessId = calcID;
-                    Console.WriteLine("进程名：" + myProcess.ProcessName + "\n" + "进程ID：" + calcID);
+                    //IntPtr hWnd = GetForegroundWindow();    //获取活动窗口句柄
+                    //GetWindowThreadProcessId(hWnd, out int calcID);
+                    //Process myProcess = Process.GetProcessById(calcID);
+                    //if (calcID != currentProcessId)
+                    //{
+                    //    currentProcessId = calcID;
+                    //    Console.WriteLine("进程名：" + myProcess.ProcessName + "\n" + "进程ID：" + calcID);
+                    //}
+                    Thread.Sleep(1000);
                 }
-                Thread.Sleep(1000);
-            }
+            });
+            Console.Read();
         }
     }
 }

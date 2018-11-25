@@ -40,6 +40,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Tmi_Quit = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Timer_Process = new System.Windows.Forms.Timer(this.components);
             this.ProcessIcon = new System.Windows.Forms.DataGridViewImageColumn();
             this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_inputLanguage = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -52,6 +53,7 @@
             // btn_OK
             // 
             this.btn_OK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btn_OK.Location = new System.Drawing.Point(658, 22);
             this.btn_OK.Margin = new System.Windows.Forms.Padding(5);
             this.btn_OK.Name = "btn_OK";
@@ -130,13 +132,19 @@
             this.panel1.Size = new System.Drawing.Size(803, 80);
             this.panel1.TabIndex = 4;
             // 
+            // Timer_Process
+            // 
+            this.Timer_Process.Enabled = true;
+            this.Timer_Process.Interval = 1000;
+            this.Timer_Process.Tick += new System.EventHandler(this.Timer_Process_Tick);
+            // 
             // ProcessIcon
             // 
             this.ProcessIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ProcessIcon.DataPropertyName = "Icon";
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
             this.ProcessIcon.DefaultCellStyle = dataGridViewCellStyle1;
             this.ProcessIcon.FillWeight = 38.77094F;
             this.ProcessIcon.HeaderText = "";
@@ -158,7 +166,7 @@
             // 
             // data_inputLanguage
             // 
-            this.data_inputLanguage.DataPropertyName = "value";
+            this.data_inputLanguage.DataPropertyName = "LanguageCode";
             this.data_inputLanguage.FillWeight = 13.29289F;
             this.data_inputLanguage.HeaderText = "输入法";
             this.data_inputLanguage.Name = "data_inputLanguage";
@@ -166,6 +174,7 @@
             // 
             // MainForm
             // 
+            this.AcceptButton = this.btn_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 615);
@@ -176,8 +185,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "SmartInput";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Process)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
@@ -197,6 +206,7 @@
         private System.Windows.Forms.ToolStripMenuItem cms_btn_Setting;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem Tmi_Quit;
+        private System.Windows.Forms.Timer Timer_Process;
         private System.Windows.Forms.DataGridViewImageColumn ProcessIcon;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
         private System.Windows.Forms.DataGridViewComboBoxColumn data_inputLanguage;

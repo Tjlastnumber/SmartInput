@@ -35,5 +35,20 @@ namespace SmartInput
             }
             return default(T);
         }
+
+        public static Task<T> AsyncReadJosn<T>(string path = "")
+        {
+            return Task.Run(() =>
+            {
+                var jsonPath = !string.IsNullOrWhiteSpace(path) ? path : FilePath;
+                if (File.Exists(jsonPath))
+                {
+                    string jsonString = File.ReadAllText(jsonPath);
+
+                    return JsonConvert.DeserializeObject<T>(jsonString);
+                }
+                return default(T);
+            });
+        }
     }
 }
