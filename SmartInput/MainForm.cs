@@ -37,10 +37,12 @@ namespace IME_Test
         private bool canClose = false;
         private bool canRefresh = false;
         private List<ProcessModel> processCache = new List<ProcessModel>();
+        private string currentProcessName;
 
         public MainForm()
         {
             InitializeComponent();
+            currentProcessName = Process.GetCurrentProcess().ProcessName;
             dgv_Process.AutoGenerateColumns = false;
             data_inputLanguage.DisplayMember = nameof(InputLanguage.LayoutName);
             data_inputLanguage.ValueMember = nameof(InputLanguage.Culture);
@@ -61,7 +63,8 @@ namespace IME_Test
 
         private async void LoadConfig()
         {
-            languageDict = await FileHelper.AsyncReadJosn<Dictionary<string, string>>();
+            var config = await FileHelper.AsyncReadJosn<Dictionary<string, string>>();
+            languageDict = config ?? new Dictionary<string, string>();
         }
 
         private Task<List<ProcessModel>> AsyncGetProcess()
@@ -70,7 +73,7 @@ namespace IME_Test
             {
                 Process[] ps = Process.GetProcesses();
                 var processes = from p in ps
-                                where p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.Length > 0
+                                where p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.Length > 0 && p.ProcessName != currentProcessName
                                 select new ProcessModel
                                 {
                                     ProcessName = p.ProcessName,
