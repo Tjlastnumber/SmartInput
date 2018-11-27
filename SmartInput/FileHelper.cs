@@ -11,7 +11,7 @@ namespace SmartInput
     public static class FileHelper
     {
         private readonly static string FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "SmartInput");
-        public static string FileName = "config.js";
+        public static string FileName = "config.json";
         public static string FilePath = Path.Combine(FolderPath, FileName);
 
         public static void SaveJosn(object o)
