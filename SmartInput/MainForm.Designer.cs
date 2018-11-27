@@ -33,6 +33,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_OK = new System.Windows.Forms.Button();
             this.dgv_Process = new System.Windows.Forms.DataGridView();
+            this.ProcessIcon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgv_inputLanguage = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -42,9 +45,6 @@
             this.Tmi_Quit = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Timer_Process = new System.Windows.Forms.Timer(this.components);
-            this.ProcessIcon = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgv_inputLanguage = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Process)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
@@ -84,67 +84,6 @@
             this.dgv_Process.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellClick);
             this.dgv_Process.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellEndEdit);
             // 
-            // notifyIcon
-            // 
-            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
-            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "SmartInput";
-            this.notifyIcon.Visible = true;
-            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
-            // 
-            // contextMenuStrip
-            // 
-            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(27, 27);
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RunStart,
-            this.cms_btn_Setting,
-            this.toolStripSeparator1,
-            this.Tmi_Quit});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(125, 76);
-            // 
-            // RunStart
-            // 
-            this.RunStart.CheckOnClick = true;
-            this.RunStart.Name = "RunStart";
-            this.RunStart.Size = new System.Drawing.Size(124, 22);
-            this.RunStart.Text = "开机启动";
-            this.RunStart.CheckedChanged += new System.EventHandler(this.RunStart_CheckedChanged);
-            // 
-            // cms_btn_Setting
-            // 
-            this.cms_btn_Setting.Name = "cms_btn_Setting";
-            this.cms_btn_Setting.Size = new System.Drawing.Size(124, 22);
-            this.cms_btn_Setting.Text = "设置";
-            this.cms_btn_Setting.Click += new System.EventHandler(this.Cms_btn_Setting_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
-            // 
-            // Tmi_Quit
-            // 
-            this.Tmi_Quit.Name = "Tmi_Quit";
-            this.Tmi_Quit.Size = new System.Drawing.Size(124, 22);
-            this.Tmi_Quit.Text = "退出";
-            this.Tmi_Quit.Click += new System.EventHandler(this.Tmi_Quit_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btn_OK);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 321);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(482, 48);
-            this.panel1.TabIndex = 4;
-            // 
-            // Timer_Process
-            // 
-            this.Timer_Process.Enabled = true;
-            this.Timer_Process.Interval = 1000;
-            this.Timer_Process.Tick += new System.EventHandler(this.Timer_Process_Tick);
-            // 
             // ProcessIcon
             // 
             this.ProcessIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -178,6 +117,68 @@
             this.dgv_inputLanguage.Name = "dgv_inputLanguage";
             this.dgv_inputLanguage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgv_inputLanguage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "SmartInput";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(27, 27);
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RunStart,
+            this.cms_btn_Setting,
+            this.toolStripSeparator1,
+            this.Tmi_Quit});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(181, 98);
+            // 
+            // RunStart
+            // 
+            this.RunStart.CheckOnClick = true;
+            this.RunStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.RunStart.Name = "RunStart";
+            this.RunStart.Size = new System.Drawing.Size(180, 22);
+            this.RunStart.Text = "开机启动";
+            this.RunStart.CheckedChanged += new System.EventHandler(this.RunStart_CheckedChanged);
+            // 
+            // cms_btn_Setting
+            // 
+            this.cms_btn_Setting.Name = "cms_btn_Setting";
+            this.cms_btn_Setting.Size = new System.Drawing.Size(180, 22);
+            this.cms_btn_Setting.Text = "设置";
+            this.cms_btn_Setting.Click += new System.EventHandler(this.Cms_btn_Setting_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // Tmi_Quit
+            // 
+            this.Tmi_Quit.Name = "Tmi_Quit";
+            this.Tmi_Quit.Size = new System.Drawing.Size(180, 22);
+            this.Tmi_Quit.Text = "退出";
+            this.Tmi_Quit.Click += new System.EventHandler(this.Tmi_Quit_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btn_OK);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 321);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(482, 48);
+            this.panel1.TabIndex = 4;
+            // 
+            // Timer_Process
+            // 
+            this.Timer_Process.Enabled = true;
+            this.Timer_Process.Interval = 1000;
+            this.Timer_Process.Tick += new System.EventHandler(this.Timer_Process_Tick);
             // 
             // MainForm
             // 
