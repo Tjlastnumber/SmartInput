@@ -1,5 +1,4 @@
-﻿using SmartInput;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,29 +12,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace IME_Test
+namespace SmartInput
 {
     public partial class MainForm : Form
     {
-        [DllImport("User32.dll")]
-        private static extern IntPtr GetForegroundWindow();     //获取活动窗口句柄
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr GetWindowThreadProcessId(IntPtr hwnd, out int ID);   //获取线程ID
-
-        [DllImport("user32.dll")]
-        private static extern bool PostMessage(IntPtr hhwnd, uint msg, IntPtr wparam, IntPtr lparam);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
-
-        private Dictionary<string, string> languageDict = new Dictionary<string, string>();
-        private const int WS_EX_NOACTIVATE = 0x08000000;
-        private const int GWL_EXSTYLE = -20;
-        private static uint WM_INPUTLANGCHANGEREQUEST = 0x0050;
-        private static uint KLF_ACTIVATE = 1;
         private bool canClose = false;
         private bool canRefresh = false;
+
+        private Dictionary<string, string> languageDict = new Dictionary<string, string>();
         private List<ProcessModel> processCache = new List<ProcessModel>();
         private string currentProcessName;
 
@@ -43,9 +27,10 @@ namespace IME_Test
         {
             InitializeComponent();
             currentProcessName = Process.GetCurrentProcess().ProcessName;
+
             dgv_Process.AutoGenerateColumns = false;
-            data_inputLanguage.DisplayMember = nameof(InputLanguage.LayoutName);
-            data_inputLanguage.ValueMember = nameof(InputLanguage.Culture);
+            dgv_inputLanguage.DisplayMember = nameof(InputLanguage.LayoutName);
+            dgv_inputLanguage.ValueMember = nameof(InputLanguage.Culture);
 
             LoadConfig();
             LoadProcesses();
@@ -54,7 +39,7 @@ namespace IME_Test
 
         private void LoadInputLanguage()
         {
-            DataGridViewComboBoxColumn ilColumn = data_inputLanguage;
+            DataGridViewComboBoxColumn ilColumn = dgv_inputLanguage;
             foreach (InputLanguage item in InputLanguage.InstalledInputLanguages)
             {
                 ilColumn.Items.Add(item);
@@ -65,23 +50,6 @@ namespace IME_Test
         {
             var config = await FileHelper.AsyncReadJosn<Dictionary<string, string>>();
             languageDict = config ?? new Dictionary<string, string>();
-        }
-
-        private Task<List<ProcessModel>> AsyncGetProcess()
-        {
-            return Task.Run(() =>
-            {
-                Process[] ps = Process.GetProcesses();
-                var processes = from p in ps
-                                where p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.Length > 0 && p.ProcessName != currentProcessName
-                                select new ProcessModel
-                                {
-                                    ProcessName = p.ProcessName,
-                                    Icon = TryGetProcessIcon(p),
-                                    LanguageCode = TryGetInputCode(p)
-                                };
-                return processes.ToList();
-            });
         }
 
         private Icon TryGetProcessIcon(Process p)
@@ -109,6 +77,23 @@ namespace IME_Test
             }
         }
 
+        private Task<List<ProcessModel>> AsyncGetProcess()
+        {
+            return Task.Run(() =>
+            {
+                Process[] ps = Process.GetProcesses();
+                var processes = from p in ps
+                                where p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.Length > 0 && p.ProcessName != currentProcessName
+                                select new ProcessModel
+                                {
+                                    ProcessName = p.ProcessName,
+                                    Icon = TryGetProcessIcon(p),
+                                    LanguageCode = TryGetInputCode(p)
+                                };
+                return processes.ToList();
+            });
+        }
+
         private async void LoadProcesses()
         {
             var process = await AsyncGetProcess();
@@ -128,17 +113,16 @@ namespace IME_Test
                 int currentProcessId = 0;
                 for (; ; )
                 {
-                    IntPtr hWnd = GetForegroundWindow();
+                    IntPtr hWnd = Win32Api.GetForegroundWindowProcessId(out int calcID);
                     if (hWnd != IntPtr.Zero)
                     {
-                        IntPtr processId = GetWindowThreadProcessId(hWnd, out int calcID);
                         if (calcID != currentProcessId)
                         {
                             currentProcessId = calcID;
                             Process myProcess = Process.GetProcessById(calcID);
                             if (languageDict.TryGetValue(myProcess.ProcessName, out string keyId))
                             {
-                                PostMessage(hWnd, WM_INPUTLANGCHANGEREQUEST, IntPtr.Zero, LoadKeyboardLayout(keyId, KLF_ACTIVATE));
+                                Win32Api.PostMessage(hWnd, keyId);
                             }
                         }
                     }

@@ -1,4 +1,4 @@
-﻿namespace IME_Test
+﻿namespace SmartInput
 {
     partial class MainForm
     {
@@ -43,7 +43,7 @@
             this.Timer_Process = new System.Windows.Forms.Timer(this.components);
             this.ProcessIcon = new System.Windows.Forms.DataGridViewImageColumn();
             this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.data_inputLanguage = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dgv_inputLanguage = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Process)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
@@ -73,7 +73,7 @@
             this.dgv_Process.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ProcessIcon,
             this.ProcessName,
-            this.data_inputLanguage});
+            this.dgv_inputLanguage});
             this.dgv_Process.DataSource = this.bindingSource;
             this.dgv_Process.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_Process.Location = new System.Drawing.Point(0, 0);
@@ -166,11 +166,11 @@
             // 
             // data_inputLanguage
             // 
-            this.data_inputLanguage.DataPropertyName = "LanguageCode";
-            this.data_inputLanguage.FillWeight = 13.29289F;
-            this.data_inputLanguage.HeaderText = "输入法";
-            this.data_inputLanguage.Name = "data_inputLanguage";
-            this.data_inputLanguage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dgv_inputLanguage.DataPropertyName = "LanguageCode";
+            this.dgv_inputLanguage.FillWeight = 13.29289F;
+            this.dgv_inputLanguage.HeaderText = "输入法";
+            this.dgv_inputLanguage.Name = "data_inputLanguage";
+            this.dgv_inputLanguage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // MainForm
             // 
@@ -209,7 +209,7 @@
         private System.Windows.Forms.Timer Timer_Process;
         private System.Windows.Forms.DataGridViewImageColumn ProcessIcon;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn data_inputLanguage;
+        private System.Windows.Forms.DataGridViewComboBoxColumn dgv_inputLanguage;
     }
 }
 
