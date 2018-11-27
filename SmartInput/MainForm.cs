@@ -29,6 +29,7 @@ namespace SmartInput
             InitializeComponent();
             currentProcessName = Process.GetCurrentProcess().ProcessName;
 
+            RunStart.Checked = Program.IsRunStart();
             dgv_Process.AutoGenerateColumns = false;
             dgv_inputLanguage.DisplayMember = nameof(InputLanguage.LayoutName);
             dgv_inputLanguage.ValueMember = nameof(InputLanguage.Culture);

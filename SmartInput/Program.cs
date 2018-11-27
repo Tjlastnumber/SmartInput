@@ -53,23 +53,26 @@ namespace SmartInput
 #endif
         }
 
+        const string REGISTRY_KEY_RUN_PATH = @"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\";
         public static bool RunWhenStart(bool Started)
         {
             bool result = true;
             string productName = Application.ProductName;
             RegistryKey HKLM = Registry.LocalMachine;
-            RegistryKey Run = HKLM.CreateSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\");
+            RegistryKey Run = HKLM.CreateSubKey(REGISTRY_KEY_RUN_PATH);
             if (Started)
             {
                 try
                 {
                     Run.SetValue(productName, Application.ExecutablePath);
-                    HKLM.Close();
                 }
                 catch (Exception err)
                 {
                     result = false;
                     MessageBox.Show(err.Message.ToString(), productName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } finally
+                {
+                    HKLM.Close();
                 }
             }
             else
@@ -77,15 +80,37 @@ namespace SmartInput
                 try
                 {
                     Run.DeleteValue(productName);
-                    HKLM.Close();
                 }
                 catch (Exception err)
                 {
                     result = false;
                     MessageBox.Show(err.Message.ToString(), productName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } 
+                finally
+                {
+                    HKLM.Close();
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// 是否为开机启动
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsRunStart()
+        {
+            string productName = Application.ProductName;
+            RegistryKey HKLM = Registry.LocalMachine;
+            RegistryKey Run = HKLM.CreateSubKey(REGISTRY_KEY_RUN_PATH);
+            try
+            {
+                return Run.GetValueNames().Any(k => k == productName);
+            }
+            catch 
+            {
+                return false;
+            }
         }
     }
 }

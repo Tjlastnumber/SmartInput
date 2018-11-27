@@ -176,6 +176,8 @@
             this.dgv_inputLanguage.DataPropertyName = "LanguageCode";
             this.dgv_inputLanguage.HeaderText = "输入法";
             this.dgv_inputLanguage.Name = "dgv_inputLanguage";
+            this.dgv_inputLanguage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_inputLanguage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // MainForm
             // 
