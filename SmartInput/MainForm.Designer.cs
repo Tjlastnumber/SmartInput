@@ -36,6 +36,7 @@
             this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.RunStart = new System.Windows.Forms.ToolStripMenuItem();
             this.cms_btn_Setting = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Tmi_Quit = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,10 +55,9 @@
             // 
             this.btn_OK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btn_OK.Location = new System.Drawing.Point(658, 22);
-            this.btn_OK.Margin = new System.Windows.Forms.Padding(5);
+            this.btn_OK.Location = new System.Drawing.Point(395, 13);
             this.btn_OK.Name = "btn_OK";
-            this.btn_OK.Size = new System.Drawing.Size(125, 38);
+            this.btn_OK.Size = new System.Drawing.Size(75, 23);
             this.btn_OK.TabIndex = 2;
             this.btn_OK.Text = "确认";
             this.btn_OK.UseVisualStyleBackColor = true;
@@ -77,10 +77,9 @@
             this.dgv_Process.DataSource = this.bindingSource;
             this.dgv_Process.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_Process.Location = new System.Drawing.Point(0, 0);
-            this.dgv_Process.Margin = new System.Windows.Forms.Padding(5);
             this.dgv_Process.Name = "dgv_Process";
             this.dgv_Process.RowTemplate.Height = 23;
-            this.dgv_Process.Size = new System.Drawing.Size(803, 535);
+            this.dgv_Process.Size = new System.Drawing.Size(482, 321);
             this.dgv_Process.TabIndex = 3;
             this.dgv_Process.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellClick);
             this.dgv_Process.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellEndEdit);
@@ -97,28 +96,37 @@
             // 
             this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(27, 27);
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RunStart,
             this.cms_btn_Setting,
             this.toolStripSeparator1,
             this.Tmi_Quit});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(127, 74);
+            this.contextMenuStrip.Size = new System.Drawing.Size(125, 76);
+            // 
+            // RunStart
+            // 
+            this.RunStart.CheckOnClick = true;
+            this.RunStart.Name = "RunStart";
+            this.RunStart.Size = new System.Drawing.Size(124, 22);
+            this.RunStart.Text = "开机启动";
+            this.RunStart.CheckedChanged += new System.EventHandler(this.RunStart_CheckedChanged);
             // 
             // cms_btn_Setting
             // 
             this.cms_btn_Setting.Name = "cms_btn_Setting";
-            this.cms_btn_Setting.Size = new System.Drawing.Size(126, 32);
+            this.cms_btn_Setting.Size = new System.Drawing.Size(124, 22);
             this.cms_btn_Setting.Text = "设置";
             this.cms_btn_Setting.Click += new System.EventHandler(this.Cms_btn_Setting_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(123, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
             // 
             // Tmi_Quit
             // 
             this.Tmi_Quit.Name = "Tmi_Quit";
-            this.Tmi_Quit.Size = new System.Drawing.Size(126, 32);
+            this.Tmi_Quit.Size = new System.Drawing.Size(124, 22);
             this.Tmi_Quit.Text = "退出";
             this.Tmi_Quit.Click += new System.EventHandler(this.Tmi_Quit_Click);
             // 
@@ -126,10 +134,9 @@
             // 
             this.panel1.Controls.Add(this.btn_OK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 535);
-            this.panel1.Margin = new System.Windows.Forms.Padding(5);
+            this.panel1.Location = new System.Drawing.Point(0, 321);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(803, 80);
+            this.panel1.Size = new System.Drawing.Size(482, 48);
             this.panel1.TabIndex = 4;
             // 
             // Timer_Process
@@ -164,24 +171,21 @@
             this.ProcessName.ReadOnly = true;
             this.ProcessName.Width = 150;
             // 
-            // data_inputLanguage
+            // dgv_inputLanguage
             // 
             this.dgv_inputLanguage.DataPropertyName = "LanguageCode";
-            this.dgv_inputLanguage.FillWeight = 13.29289F;
             this.dgv_inputLanguage.HeaderText = "输入法";
-            this.dgv_inputLanguage.Name = "data_inputLanguage";
-            this.dgv_inputLanguage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dgv_inputLanguage.Name = "dgv_inputLanguage";
             // 
             // MainForm
             // 
             this.AcceptButton = this.btn_OK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 615);
+            this.ClientSize = new System.Drawing.Size(482, 369);
             this.Controls.Add(this.dgv_Process);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
@@ -207,6 +211,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem Tmi_Quit;
         private System.Windows.Forms.Timer Timer_Process;
+        private System.Windows.Forms.ToolStripMenuItem RunStart;
         private System.Windows.Forms.DataGridViewImageColumn ProcessIcon;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
         private System.Windows.Forms.DataGridViewComboBoxColumn dgv_inputLanguage;

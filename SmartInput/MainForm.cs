@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartInput.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -203,6 +204,18 @@ namespace SmartInput
             Close();
         }
 
+        private void RunStart_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Program.RunWhenStart(RunStart.Checked))
+            {
+                Settings.Default.RunStart = RunStart.Checked;
+                Settings.Default.Save();
+            }
+            else
+            {
+                RunStart.Checked = !RunStart.Checked;
+            }
+        }
     }
 
     public class ProcessModel : IEquatable<ProcessModel>

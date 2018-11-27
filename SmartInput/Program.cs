@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -50,6 +51,41 @@ namespace SmartInput
                 }
             }
 #endif
+        }
+
+        public static bool RunWhenStart(bool Started)
+        {
+            bool result = true;
+            string productName = Application.ProductName;
+            RegistryKey HKLM = Registry.LocalMachine;
+            RegistryKey Run = HKLM.CreateSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\");
+            if (Started)
+            {
+                try
+                {
+                    Run.SetValue(productName, Application.ExecutablePath);
+                    HKLM.Close();
+                }
+                catch (Exception err)
+                {
+                    result = false;
+                    MessageBox.Show(err.Message.ToString(), productName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                try
+                {
+                    Run.DeleteValue(productName);
+                    HKLM.Close();
+                }
+                catch (Exception err)
+                {
+                    result = false;
+                    MessageBox.Show(err.Message.ToString(), productName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            return result;
         }
     }
 }
