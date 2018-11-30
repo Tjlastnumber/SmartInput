@@ -1,14 +1,11 @@
 ﻿using SmartInput.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,12 +14,13 @@ namespace SmartInput
 {
     public partial class MainForm : Form
     {
+        private readonly string currentProcessName;
+
         private bool canClose = false;
         private bool canRefresh = false;
 
         private Dictionary<string, string> languageDict = new Dictionary<string, string>();
         private List<ProcessModel> processCache = new List<ProcessModel>();
-        private string currentProcessName;
 
         public MainForm()
         {
@@ -35,8 +33,8 @@ namespace SmartInput
             dgv_inputLanguage.ValueMember = nameof(InputLanguage.Culture);
 
             LoadConfig();
-            LoadProcesses();
             LoadInputLanguage();
+            LoadProcesses();
         }
 
         private void LoadInputLanguage()
@@ -48,9 +46,9 @@ namespace SmartInput
             }
         }
 
-        private async void LoadConfig()
+        private void LoadConfig()
         {
-            var config = await FileHelper.AsyncReadJosn<Dictionary<string, string>>();
+            var config = FileHelper.ReadJosn<Dictionary<string, string>>();
             languageDict = config ?? new Dictionary<string, string>();
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace SmartInput
 #endif
         }
 
-        const string REGISTRY_KEY_RUN_PATH = @"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\";
+        const string REGISTRY_KEY_RUN_PATH = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
         public static bool RunWhenStart(bool Started)
         {
             bool result = true;
@@ -64,7 +65,7 @@ namespace SmartInput
             {
                 try
                 {
-                    Run.SetValue(productName, Application.ExecutablePath);
+                    Run.SetValue(productName, Path.GetFullPath(Application.ExecutablePath));
                 }
                 catch (Exception err)
                 {
@@ -73,13 +74,14 @@ namespace SmartInput
                 } finally
                 {
                     HKLM.Close();
+                    Run.Close();
                 }
             }
             else
             {
                 try
                 {
-                    Run.DeleteValue(productName);
+                    Run.DeleteValue(productName, false);
                 }
                 catch (Exception err)
                 {
@@ -89,6 +91,7 @@ namespace SmartInput
                 finally
                 {
                     HKLM.Close();
+                    Run.Close();
                 }
             }
             return result;
