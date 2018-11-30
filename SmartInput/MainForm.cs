@@ -159,9 +159,8 @@ namespace SmartInput
         private void DataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var cb = dgv_Process[e.ColumnIndex, e.RowIndex] as DataGridViewComboBoxCell;
-            CultureInfo culture = cb.Value as CultureInfo;
             string processName = ((ProcessModel)bindingSource[e.RowIndex]).ProcessName;
-            if (culture != null && culture.KeyboardLayoutId != 0)
+            if (cb.Value is CultureInfo culture && culture.KeyboardLayoutId != 0)
             {
                 languageDict[processName] = culture.KeyboardLayoutId.ToString("x8");
             }
@@ -205,6 +204,7 @@ namespace SmartInput
 
         private void RunStart_CheckedChanged(object sender, EventArgs e)
         {
+            if (!(RunStart.Checked ^ Program.IsRunStart())) return;
             if (Program.RunWhenStart(RunStart.Checked))
             {
                 Settings.Default.RunStart = RunStart.Checked;

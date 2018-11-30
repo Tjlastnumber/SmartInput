@@ -135,33 +135,33 @@
             this.toolStripSeparator1,
             this.Tmi_Quit});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(181, 98);
+            this.contextMenuStrip.Size = new System.Drawing.Size(125, 76);
             // 
             // RunStart
             // 
             this.RunStart.CheckOnClick = true;
             this.RunStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.RunStart.Name = "RunStart";
-            this.RunStart.Size = new System.Drawing.Size(180, 22);
+            this.RunStart.Size = new System.Drawing.Size(124, 22);
             this.RunStart.Text = "开机启动";
             this.RunStart.CheckedChanged += new System.EventHandler(this.RunStart_CheckedChanged);
             // 
             // cms_btn_Setting
             // 
             this.cms_btn_Setting.Name = "cms_btn_Setting";
-            this.cms_btn_Setting.Size = new System.Drawing.Size(180, 22);
+            this.cms_btn_Setting.Size = new System.Drawing.Size(124, 22);
             this.cms_btn_Setting.Text = "设置";
             this.cms_btn_Setting.Click += new System.EventHandler(this.Cms_btn_Setting_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
             // 
             // Tmi_Quit
             // 
             this.Tmi_Quit.Name = "Tmi_Quit";
-            this.Tmi_Quit.Size = new System.Drawing.Size(180, 22);
+            this.Tmi_Quit.Size = new System.Drawing.Size(124, 22);
             this.Tmi_Quit.Text = "退出";
             this.Tmi_Quit.Click += new System.EventHandler(this.Tmi_Quit_Click);
             // 
@@ -192,8 +192,10 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SmartInput";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Process)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
