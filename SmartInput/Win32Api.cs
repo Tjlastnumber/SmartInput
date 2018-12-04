@@ -44,7 +44,7 @@ namespace SmartInput
         /// <param name="pwszKLID">键盘id( 16 进制 8 位 )</param>
         /// <param name="Flags">如何装入键盘布局</param>
         /// <returns>键盘布局句柄</returns>
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
 
         private const int WS_EX_NOACTIVATE = 0x08000000;

@@ -79,10 +79,9 @@ namespace SmartInput
 
         private Task<List<ProcessModel>> AsyncGetProcess()
         {
-            return Task.Run(() =>
+            return Task.Factory.StartNew(() =>
             {
-                Process[] ps = Process.GetProcesses();
-                var processes = from p in ps
+                var processes = from p in Process.GetProcesses()
                                 where p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.Length > 0 && p.ProcessName != currentProcessName
                                 select new ProcessModel
                                 {
@@ -101,6 +100,7 @@ namespace SmartInput
             {
                 processCache = process;
                 bindingSource.DataSource = processCache;
+                process = null;
             }
         }
 
@@ -108,7 +108,7 @@ namespace SmartInput
         {
             base.OnLoad(e);
 
-            Task.Run(() =>
+            Task.Factory.StartNew(() =>
             {
                 int currentProcessId = 0;
                 for (; ; )
@@ -217,7 +217,7 @@ namespace SmartInput
         }
     }
 
-    public class ProcessModel : IEquatable<ProcessModel>
+    public class ProcessModel : IEquatable<ProcessModel>, IDisposable
     {
         public string ProcessName { get; set; }
         private Icon icon;
@@ -249,6 +249,24 @@ namespace SmartInput
             int hashProcessName = ProcessName.GetHashCode();
 
             return hashProcessName;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool flag)
+        {
+            if (flag)
+            {
+                GC.SuppressFinalize(this);
+            }
+            else
+            {
+                icon = null;
+                icon.Dispose();
+            }
         }
     }
 }
