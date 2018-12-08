@@ -28,6 +28,7 @@ namespace SmartInput
             currentProcessName = Process.GetCurrentProcess().ProcessName;
 
             RunStart.Checked = Program.IsRunStart();
+            dgv_Process.DataError += Dgv_Process_DataError;
             dgv_Process.AutoGenerateColumns = false;
             dgv_inputLanguage.DisplayMember = nameof(InputLanguage.LayoutName);
             dgv_inputLanguage.ValueMember = nameof(InputLanguage.Culture);
@@ -35,6 +36,7 @@ namespace SmartInput
             LoadConfig();
             LoadInputLanguage();
             LoadProcesses();
+
         }
 
         private void LoadInputLanguage()
@@ -160,9 +162,16 @@ namespace SmartInput
         {
             var cb = dgv_Process[e.ColumnIndex, e.RowIndex] as DataGridViewComboBoxCell;
             string processName = ((ProcessModel)bindingSource[e.RowIndex]).ProcessName;
-            if (cb.Value is CultureInfo culture && culture.KeyboardLayoutId != 0)
+            if (cb.Value is CultureInfo culture && culture.KeyboardLayoutId != 0 && !isNone)
             {
                 languageDict[processName] = culture.KeyboardLayoutId.ToString("x8");
+            }
+            else
+            {
+                if (languageDict.ContainsKey(processName))
+                    languageDict.Remove(processName);
+                cb.Value = null;
+                isNone = false;
             }
             FileHelper.SaveJosn(languageDict);
         }
@@ -214,6 +223,13 @@ namespace SmartInput
             {
                 RunStart.Checked = !RunStart.Checked;
             }
+        }
+
+        private bool isNone = true;
+        private void Dgv_Process_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+            isNone = true;
         }
     }
 
