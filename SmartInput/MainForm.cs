@@ -36,7 +36,6 @@ namespace SmartInput
             LoadConfig();
             LoadInputLanguage();
             LoadProcesses();
-
         }
 
         private void LoadInputLanguage()
@@ -106,6 +105,12 @@ namespace SmartInput
             }
         }
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            Hide();
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -131,6 +136,7 @@ namespace SmartInput
                     Thread.Sleep(500);
                 }
             });
+
         }
 
         private void Timer_Process_Tick(object sender, EventArgs e)
@@ -181,22 +187,21 @@ namespace SmartInput
             ShowInTaskbar = true;
             canRefresh = true;
             TopMost = true;
-            Activate();
             Show();
+            WindowState = FormWindowState.Normal;
             TopMost = false;
         }
 
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            WindowState = FormWindowState.Normal;
             ShowWindow();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ShowInTaskbar = false;
             canRefresh = false;
             e.Cancel = e.CloseReason == CloseReason.UserClosing && !canClose;
+            WindowState = FormWindowState.Minimized;
             Hide();
         }
 
